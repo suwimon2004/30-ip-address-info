@@ -59,9 +59,8 @@ pipeline {
   }
 post {
     always {
-        node {
-            junit '**/junit.xml'
-        }
+        echo "Pipeline finished"
     }
 }
 }
+
