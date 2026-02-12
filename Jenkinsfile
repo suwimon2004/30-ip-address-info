@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    VERCEL_PROJECT_NAME = '30-ip-address-info'
-    VERCEL_TOKEN = credentials('DevOps30-ip-address-info') // ดึงจาก Jenkins
+    VERCEL_PROJECT_NAME = 'DevOps30-Quiz1'
+    VERCEL_TOKEN = credentials('DevOps30-Quiz1') // ดึงจาก Jenkins
   }
   agent {
     kubernetes {
