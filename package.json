@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "IP Address Info",
   "main": "app.js",
-  "scripts": {
-    "start": "node app.js"
+   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --testResultsProcessor=\"jest-junit\"",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "express": "^4.18.2"
