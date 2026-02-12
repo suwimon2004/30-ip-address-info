@@ -1,17 +1,17 @@
 pipeline {
   environment {
     VERCEL_PROJECT_NAME = '30-devops-quiz'
-    VERCEL_TOKEN = credentials('DevOps30-vercel') // ดึงจาก Jenkins
+    VERCEL_TOKEN = credentials('DevOps30-vercel')
   }
+
   agent {
     kubernetes {
-      // This YAML defines the "Docker Container" you want to use
       yaml '''
         apiVersion: v1
         kind: Pod
         spec:
           containers:
-          - name: my-builder  # We will refer to this name later
+          - name: my-builder
             image: node:20-alpine
             command:
             - cat
@@ -19,7 +19,15 @@ pipeline {
       '''
     }
   }
+
   stages {
+
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
     stage('Test npm') {
       steps {
         container('my-builder') {
@@ -28,6 +36,7 @@ pipeline {
         }
       }
     }
+
     stage('Build') {
       steps {
         container('my-builder') {
@@ -36,11 +45,11 @@ pipeline {
         }
       }
     }
+
     stage('Deploy') {
       steps {
         container('my-builder') {
           sh 'npm install -g vercel@latest'
-          // Deploy using token-only (non-interactive)
           sh '''
             vercel link --project $VERCEL_PROJECT_NAME --token $VERCEL_TOKEN --yes
             vercel --token $VERCEL_TOKEN --prod --confirm
@@ -48,6 +57,5 @@ pipeline {
         }
       }
     }
-
   }
 }
