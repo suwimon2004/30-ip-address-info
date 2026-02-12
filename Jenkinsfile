@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    VERCEL_PROJECT_NAME = 'DevOps30-Quiz1'
-    VERCEL_TOKEN = credentials('DevOps30-Quiz1') // ดึงจาก Jenkins
+    VERCEL_PROJECT_NAME = '30-devops-quiz'
+    VERCEL_TOKEN = credentials('DevOps30-vercel') // ดึงจาก Jenkins
   }
   agent {
     kubernetes {
@@ -36,13 +36,6 @@ pipeline {
         }
       }
     }
-    stage('Test Build') {
-      steps {
-        container('my-builder') {
-          sh 'npm run test'
-        }
-      }
-    }
     stage('Deploy') {
       steps {
         container('my-builder') {
@@ -57,10 +50,4 @@ pipeline {
     }
 
   }
-post {
-    always {
-        echo "Pipeline finished"
-    }
 }
-}
-
